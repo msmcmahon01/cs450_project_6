@@ -18,9 +18,9 @@ const vec3 SPECULARCOLOR = vec3( 1., 1., 1. );
 void
 main( ) {
 	vec3 myColor = SALMONCOLOR;
-	float ds = ???					// s distance from current frag to salmon eye
-	float dt = ???					// t distance from current frag to salmon eye
-	if( <<we are within the eye circle>> ) {
+	float ds = 1					// s distance from current frag to salmon eye
+	float dt = 1					// t distance from current frag to salmon eye
+	if( 1 /*<<we are within the eye circle>>*/ ) {
 		myColor = EYECOLOR;
 	}
 

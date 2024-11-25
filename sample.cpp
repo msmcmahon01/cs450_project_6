@@ -95,7 +95,7 @@ enum ButtonVals
 
 // window background color (rgba):
 
-const GLfloat BACKCOLOR[ ] = { 0., 0., 0., 1. };
+const GLfloat BACKCOLOR[ ] = { 1., 1., 1., 1. };
 
 // line width for the axes:
 
@@ -466,7 +466,7 @@ Display( )
 
 	Salmon.Use();
 
-	float amp = 1;
+	float amp = 0.25;
 	float freq = 1;
 	float speed = 1;
 
@@ -761,7 +761,7 @@ InitGraphics( )
 
 	// all other setups go here, such as GLSLProgram and KeyTime setups:
 	Salmon.Init();
-	bool valid = Salmon.Create( "salmon.vert", "salmon.frag" );
+	bool valid = Salmon.Create( "shaders/salmon.vert", "shaders/salmon.frag" );
 
 	if ( !valid ) {
 		fprintf( stderr, "Yuch! The Salmon shader did not compile.\n" );
