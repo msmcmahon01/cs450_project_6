@@ -468,7 +468,7 @@ Display( )
 
 	float amp = 0.25;
 	float freq = 1;
-	float speed = 1;
+	float speed = 10;
 
 	Salmon.SetUniformVariable( "uTime", Time );
 	Salmon.SetUniformVariable( "uAmp", amp);

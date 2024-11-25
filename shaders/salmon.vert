@@ -23,7 +23,7 @@ main() {
 	// which direction on the salmon will do the wriggling?
 	// what multiplies time to get distance (wriggled)
 	// what multiplies position to get how many wriggles we see?
-	vert.x += uAmp * sin( TWOPI*( (10*uTime)+(vert.z/LENGTH) ) );
+	vert.x += uAmp * sin( TWOPI*( (uSpeed*uTime)+(uFreq*vert.z/LENGTH) ) );
 
 	// setup for per-fragment lighting:
 	vec4 ECposition = gl_ModelViewMatrix * vec4( vert, 1. );
