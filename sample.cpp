@@ -95,7 +95,7 @@ enum ButtonVals
 
 // window background color (rgba):
 
-const GLfloat BACKCOLOR[ ] = { 1., 1., 1., 1. };
+const GLfloat BACKCOLOR[ ] = { 0., 0.5, 1., 1. };
 
 // line width for the axes:
 
@@ -181,6 +181,7 @@ int		ShadowsOn;				// != 0 means to turn shadows on
 float	Time;					// used for animation, this has a value between 0. and 1.
 int		Xmouse, Ymouse;			// mouse values
 float	Xrot, Yrot;				// rotation angles in degrees
+float	amp, freq, speed;
 
 
 // function prototypes:
@@ -466,10 +467,6 @@ Display( )
 
 	Salmon.Use();
 
-	float amp = 0.25;
-	float freq = 1;
-	float speed = 10;
-
 	Salmon.SetUniformVariable( "uTime", Time );
 	Salmon.SetUniformVariable( "uAmp", amp);
 	Salmon.SetUniformVariable( "uSpeed", speed );
@@ -617,6 +614,33 @@ DoProjectMenu( int id )
 
 	glutSetWindow( MainWindow );
 	glutPostRedisplay( );
+}
+
+
+void
+DoAmpMenu( int id ) {
+	amp = id * 0.25;
+
+	glutSetWindow( MainWindow );
+	glutPostRedisplay( );
+}
+
+
+void
+DoFreqMenu(int id) {
+	freq = id;
+
+	glutSetWindow(MainWindow);
+	glutPostRedisplay();
+}
+
+
+void
+DoSpeedMenu(int id) {
+	speed = id;
+
+	glutSetWindow(MainWindow);
+	glutPostRedisplay();
 }
 
 
@@ -771,8 +795,8 @@ InitGraphics( )
 	}
 
 	Salmon.SetUniformVariable( "uKa", 0.1f );
-	Salmon.SetUniformVariable( "uKd", 0.4f );
-	Salmon.SetUniformVariable( "uKs", 0.5f );
+	Salmon.SetUniformVariable( "uKd", 0.6f );
+	Salmon.SetUniformVariable( "uKs", 0.3f );
 	Salmon.SetUniformVariable( "uShininess", 1.f );
 }
 
@@ -797,7 +821,7 @@ InitLists( )
 
 	SalmonDL = glGenLists( 1 );
 	glNewList( SalmonDL, GL_COMPILE );
-		LoadObjFile( (char*) "obj/salmon.obj" );
+		LoadObjFile( (char*) "obj/salmon_high.obj" );
 	glEndList( );
 
 
@@ -853,9 +877,29 @@ InitMenus( )
 	glutAddMenuEntry( "Orthographic",  ORTHO );
 	glutAddMenuEntry( "Perspective",   PERSP );
 
+	int ampmenu = glutCreateMenu( DoAmpMenu );
+	glutAddMenuEntry( "Off", 0);
+	glutAddMenuEntry( "0.25", 1);
+	glutAddMenuEntry( "0.5", 2);
+	glutAddMenuEntry( "0.75", 3);
+	glutAddMenuEntry( "1.0", 4);
+
+	int freqmenu = glutCreateMenu(DoFreqMenu);
+	glutAddMenuEntry( "Off", 0);
+	glutAddMenuEntry( "1", 1);
+	glutAddMenuEntry( "2", 2);
+
+	int speedmenu = glutCreateMenu(DoSpeedMenu);
+	glutAddMenuEntry("Off", 0);
+	glutAddMenuEntry("10", 10);
+	glutAddMenuEntry("20", 20);
+
 	int mainmenu = glutCreateMenu( DoMainMenu );
 	glutAddSubMenu(   "Axes",          axesmenu);
 	glutAddSubMenu(   "Axis Colors",   colormenu);
+	glutAddSubMenu(   "Amplitude",     ampmenu);
+	glutAddSubMenu(   "Frequency",     freqmenu);
+	glutAddSubMenu(   "Speed",         speedmenu);
 
 #ifdef DEMO_DEPTH_BUFFER
 	glutAddSubMenu(   "Depth Buffer",  depthbuffermenu);
@@ -1026,6 +1070,9 @@ Reset( )
 	NowColor = YELLOW;
 	NowProjection = PERSP;
 	Xrot = Yrot = 0.;
+	amp = 0.25;
+	freq = 1;
+	speed = 10;
 }
 
 

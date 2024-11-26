@@ -1,4 +1,4 @@
 
-ERROR: 0:22: 'float' : syntax error syntax error
+ERROR: 0:23: '' : boolean expression expected 
 
 
